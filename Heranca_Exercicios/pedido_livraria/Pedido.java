@@ -12,7 +12,7 @@ public class Pedido {
         for(ItemPedido item : itens) {
             soma += item.getQuantidade() * item.getProduto().obterPrecoLiquido();
         }
-        return soma;
+        return soma * (1.0 - percentualDesconto / 100.0);
     }
     
 }
