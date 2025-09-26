@@ -5,7 +5,7 @@ public class Pedido {
     private int codigo;
     private double peso;
     private double total;
-    private Frete Frete;
+    private Frete frete;
 
     public Pedido(int codigo, double peso, double total) {
         this.codigo = codigo;
@@ -26,7 +26,7 @@ public class Pedido {
     }
 
     public Frete getFrete() {
-        return Frete;
+        return frete;
     }
 
     public void setFrete(Frete frete){

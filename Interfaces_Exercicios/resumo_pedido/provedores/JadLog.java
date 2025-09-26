@@ -1,7 +1,5 @@
 package provedores;
 
-import provedores.ProvedorFrete;
-
 public class JadLog implements ProvedorFrete {
 
     @Override

@@ -1,4 +1,4 @@
-package Interfaces_Exercicios.resumo_pedido.provedores;
+package provedores;
 
 import provedores.ProvedorFrete;
 
