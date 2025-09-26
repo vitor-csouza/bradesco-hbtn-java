@@ -5,6 +5,7 @@ public class Pedido {
 
     public Pedido(double percentualDesconto, ItemPedido[] itens) {
         this.itens = itens;
+        this.percentualDesconto = percentualDesconto;
     }
 
     public double calcularTotal(){
@@ -13,7 +14,7 @@ public class Pedido {
         for(ItemPedido item : itens) {
             soma += item.getQuantidade() * item.getProduto().obterPrecoLiquido();
         }
-        desconto = (100 - percentualDesconto)/100;
+        desconto = (100 - this.percentualDesconto)/100;
         return soma * desconto;
     }
     
