@@ -43,7 +43,6 @@ public class Pedido {
 
         System.out.println(SEP);
         System.out.printf("DESCONTO: %.2f%n", valorDesconto);
-        System.out.println(SEP);
         System.out.printf("TOTAL PRODUTOS: %.2f%n", soma);
         System.out.println(SEP);
         System.out.printf("TOTAL PEDIDO: %.2f%n", calcularTotal());
