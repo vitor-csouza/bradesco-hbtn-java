@@ -45,10 +45,10 @@ public class GerenciamentoDeContatos {
 
     // Busca um contato pelo nome
     public void buscarContato(String nome) {
-        if (contatos.containsKey(nome)) {
+        Contato contato = contatos.get(nome);
+        if (contato == null) {
             System.out.printf("Contato %s não encontrado.%n", nome);
         } else {
-            Contato contato = contatos.get(nome);
             System.out.printf("Contato encontrado: %s%n", nome);
             contato.exibirContato();
         }
@@ -57,11 +57,10 @@ public class GerenciamentoDeContatos {
 
     // Remove um contato pelo nome
     public void removerContato(String nome) {
-        if (contatos.containsKey(nome)) {
-            System.out.printf("Contato %s não encontrado.%n", nome);
+        if (contatos.remove(nome) != null) {
+            System.out.printf("Contato %s removido com sucesso!%n", nome);
         } else {
-            contatos.remove(nome);
-            System.out.printf("Contato %s removido com sucesoo!", nome);
+            System.out.printf("Contato %s não encontrado.%n", nome);
         }
     }
 
