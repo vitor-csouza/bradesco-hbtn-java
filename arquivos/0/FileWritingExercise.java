@@ -1,39 +1,32 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 public class FileWritingExercise {
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        FileWriter fileWriter = null;
-        BufferedWriter writer = null;
-        String linha = "";
-        String SAIR = "SAIR";
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in, "UTF-8");
 
         System.out.print("Digite o nome do arquivo (com extensão .txt): ");
         String fileName = scanner.nextLine().trim();
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            System.out.println("Digite linhas de texto. Para sair, digite 'sair'.");
 
-        try {
-            fileWriter = new FileWriter(fileName);
-            writer = new BufferedWriter(fileWriter);
-            do{
-                System.out.println("Caso queira sair, digite SAIR.");
-                System.out.println("Ou digite uma nova linha: ");
-                linha = scanner.nextLine();
+            while (true) {
+                String linha = scanner.nextLine();
+                if (linha.equalsIgnoreCase("sair")) {
+                    break;
+                }
                 writer.write(linha);
                 writer.newLine();
+            }
 
-            } while(!linha.equalsIgnoreCase(SAIR));
+            System.out.println("Arquivo criado e conteúdo salvo com sucesso.");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar o arquivo: " + e.getMessage());
+        } finally {
+            scanner.close();
         }
-        writer.close();
-        scanner.close();
     }
 }
