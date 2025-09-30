@@ -19,6 +19,8 @@ public class FileReadingExercise {
                 System.out.println(linha);
                 linha = reader.readLine();
             }
+            System.out.println("");
+            System.out.println("Leitura do arquivo concluída.");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
