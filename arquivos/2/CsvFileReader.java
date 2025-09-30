@@ -27,7 +27,6 @@ public class CsvFileReader {
                 System.out.println("------------------------");
             } while(linha != null);
             System.out.println("Leitura do arquivo concluída.");
-            System.out.println(" ");
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
