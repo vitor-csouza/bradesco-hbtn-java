@@ -32,14 +32,19 @@ public class Estoque {
         salvarProdutos();
     }
 
-    public void atualizarQuantidade(int idAtualizar, int novaQuantidade) {
+    public boolean atualizarQuantidade(int idAtualizar, int novaQuantidade) {
+        if (novaQuantidade < 0) return false;
+    
+        boolean atualizado = false;
         for (Produto p : produtos) {
             if (p.getId() == idAtualizar) {
                 p.setQuantidade(novaQuantidade);
+                atualizado = true;
                 break;
             }
         }
-        salvarProdutos();
+        if (atualizado) salvarProdutos();
+        return atualizado;
     }
 
     public void exibirEstoque() {
