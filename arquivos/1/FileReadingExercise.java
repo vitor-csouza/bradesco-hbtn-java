@@ -15,7 +15,6 @@ public class FileReadingExercise {
             fileReader = new FileReader(fileName);
             reader = new BufferedReader(fileReader);
             linha = reader.readLine();
-            System.out.println(linha);
             while(linha != null){
                 System.out.println(linha);
                 linha = reader.readLine();
