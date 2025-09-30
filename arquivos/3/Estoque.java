@@ -49,27 +49,29 @@ public class Estoque {
     }
 
     private List<Produto> mapearProdutos(String fileName) {
-        List<Produto> lista = new ArrayList<>();
+        List<Produto> produtos = new ArrayList<>();
         FileReader fileReader = null;
         BufferedReader reader = null;
-
+    
         try {
             fileReader = new FileReader(fileName);
             reader = new BufferedReader(fileReader);
-
+    
             String linha;
             while ((linha = reader.readLine()) != null) {
                 if (linha.trim().isEmpty()) continue;
-
-                String[] partes = obterDadosProdutoCsv(linha);
+    
+                String[] partes = linha.split(",");
                 if (partes.length < 4) continue;
-
-                int id = Integer.parseInt(partes[0]);
-                String nome = partes[1];
-                int quantidade = Integer.parseInt(partes[2]);
-                double preco = Double.parseDouble(partes[3]);
-
-                lista.add(new Produto(id, nome, quantidade, preco));
+    
+                int id = Integer.parseInt(partes[0].trim());
+                String nome = partes[1].trim();
+                if (nome.isEmpty() || nome.matches("\\d+")) continue;
+    
+                int quantidade = Integer.parseInt(partes[2].trim());
+                double preco = Double.parseDouble(partes[3].trim());
+    
+                produtos.add(new Produto(id, nome, quantidade, preco));
             }
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
@@ -82,7 +84,7 @@ public class Estoque {
                 try { fileReader.close(); } catch (IOException ignored) {}
             }
         }
-        return lista;
+        return produtos;
     }
 
     private String[] obterDadosProdutoCsv(String linha) {
