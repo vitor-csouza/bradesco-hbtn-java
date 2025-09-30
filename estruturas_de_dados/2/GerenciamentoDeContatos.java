@@ -50,7 +50,8 @@ public class GerenciamentoDeContatos {
             System.out.printf("Contato %s não encontrado.%n", nome);
         } else {
             System.out.printf("Contato encontrado: %s%n", nome);
-            contato.exibirContato();
+            System.out.println("Telefones: " + contato.getTelefones());
+            System.out.println("Emails: " + contato.getEmails());
         }
     }
 
