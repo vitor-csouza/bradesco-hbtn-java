@@ -34,7 +34,6 @@ public class GerenciamentoDeContatos {
             return;
         }
         contatos.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(String.CASE_INSENSITIVE_ORDER))
                 .forEach(e -> {
                     System.out.printf("Nome: %s%n", e.getKey());
                     e.getValue().exibirContato();
