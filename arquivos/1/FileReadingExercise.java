@@ -12,6 +12,8 @@ public class FileReadingExercise {
         String linha = "";
 
         try {
+            System.out.println("Conteúdo do arquivo 'exemplo.txt':");
+            System.out.println("");
             fileReader = new FileReader(fileName);
             reader = new BufferedReader(fileReader);
             linha = reader.readLine();
