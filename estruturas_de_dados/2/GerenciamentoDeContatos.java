@@ -27,30 +27,37 @@ public class GerenciamentoDeContatos {
     }
 
 
-    // Exibe todos os contatos
+    // Exibe todos os contatos (ordenado por nome, case-insensitive)
     public void exibirContatos() {
-        contatos.forEach((k,v) -> {
-            System.out.printf("Nome: %s%n", k);
-            v.exibirContato();
-            System.out.println("-------------------------------");
-        });
+        if (contatos.isEmpty()) {
+            System.out.println("Nenhum contato cadastrado.");
+            return;
+        }
+        contatos.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(String.CASE_INSENSITIVE_ORDER))
+                .forEach(e -> {
+                    System.out.printf("Nome: %s%n", e.getKey());
+                    e.getValue().exibirContato();
+                    System.out.println("-------------------------------");
+                });
     }
 
 
     // Busca um contato pelo nome
     public void buscarContato(String nome) {
-        if (!contatos.containsKey(nome)) {
+        if (contatos.containsKey(nome)) {
             System.out.printf("Contato %s não encontrado.%n", nome);
         } else {
             Contato contato = contatos.get(nome);
             System.out.printf("Contato encontrado: %s%n", nome);
+            contato.exibirContato();
         }
     }
 
 
     // Remove um contato pelo nome
     public void removerContato(String nome) {
-        if (!contatos.containsKey(nome)) {
+        if (contatos.containsKey(nome)) {
             System.out.printf("Contato %s não encontrado.%n", nome);
         } else {
             contatos.remove(nome);
