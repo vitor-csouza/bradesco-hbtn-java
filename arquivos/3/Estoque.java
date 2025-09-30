@@ -1,11 +1,5 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class Estoque {
 
@@ -13,89 +7,79 @@ public class Estoque {
     private String filename;
     private int proximoId = 1;
 
-    public Estoque(String filename) {
+    public Estoque(String filename){
         this.filename = filename.trim();
         this.produtos = mapearProdutos(this.filename);
-        for (Produto p : produtos) {
-            if (p.getId() >= proximoId) proximoId = p.getId() + 1;
-        }
+        for (Produto p : produtos) if (p.getId() >= proximoId) proximoId = p.getId() + 1;
     }
 
-    public void adicionarProduto(String nome, int quantidade, double preco) {
-        Produto novo = new Produto(proximoId++, nome, quantidade, preco);
+    public void adicionarProduto(String nome, int quantidade, double preco){
+        if (!nomeValido(nome)) return;
+        Produto novo = new Produto(proximoId++, nome.trim(), quantidade, preco);
         produtos.add(novo);
         salvarProdutos();
     }
     
-    public void excluirProduto(int id) {
+    public void excluirProduto(int id){
         produtos.removeIf(p -> p.getId() == id);
         salvarProdutos();
     }
 
-    public boolean atualizarQuantidade(int idAtualizar, int novaQuantidade) {
-        if (novaQuantidade < 0) return false;
-    
-        boolean atualizado = false;
+    public void exibirEstoque(){
+        for (Produto p : produtos) {
+            System.out.printf("ID: %d, Nome: %s, Quantidade: %d, Preço: %s%n",
+                p.getId(), p.getNome(), p.getQuantidade(), String.valueOf(p.getPreco()));
+        }
+    }
+
+    public void atualizarQuantidade(int idAtualizar, int novaQuantidade){
         for (Produto p : produtos) {
             if (p.getId() == idAtualizar) {
                 p.setQuantidade(novaQuantidade);
-                atualizado = true;
                 break;
             }
         }
-        if (atualizado) salvarProdutos();
-        return atualizado;
+        salvarProdutos();
     }
 
-    public void exibirEstoque() {
-        for (Produto p : produtos) {
-            System.out.println(p.toString());
-        }
+    private boolean nomeValido(String nome) {
+        if (nome == null) return false;
+        String n = nome.trim();
+        if (n.length() < 2) return false;
+        if (n.matches("\\d+")) return false;
+        return true;
     }
 
     private List<Produto> mapearProdutos(String fileName) {
-        List<Produto> produtos = new ArrayList<>();
-        FileReader fileReader = null;
-        BufferedReader reader = null;
-    
+        List<Produto> lista = new ArrayList<>();
+        FileReader fr = null;
+        BufferedReader br = null;
         try {
-            fileReader = new FileReader(fileName);
-            reader = new BufferedReader(fileReader);
-    
+            fr = new FileReader(fileName);
+            br = new BufferedReader(fr);
             String linha;
-            while ((linha = reader.readLine()) != null) {
+            while ((linha = br.readLine()) != null) {
                 if (linha.trim().isEmpty()) continue;
-    
                 String[] partes = linha.split(",");
                 if (partes.length < 4) continue;
-    
+
                 int id = Integer.parseInt(partes[0].trim());
                 String nome = partes[1].trim();
-                if (nome.isEmpty() || nome.matches("\\d+")) continue;
-    
+                if (!nomeValido(nome)) continue;
+
                 int quantidade = Integer.parseInt(partes[2].trim());
                 double preco = Double.parseDouble(partes[3].trim());
-    
-                produtos.add(new Produto(id, nome, quantidade, preco));
+                lista.add(new Produto(id, nome, quantidade, preco));
             }
         } catch (FileNotFoundException e) {
+            // arquivo pode não existir ainda
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         } finally {
-            if (reader != null) {
-                try { reader.close(); } catch (IOException ignored) {}
-            }
-            if (fileReader != null) {
-                try { fileReader.close(); } catch (IOException ignored) {}
-            }
+            if (br != null) try { br.close(); } catch (IOException ignored) {}
+            if (fr != null) try { fr.close(); } catch (IOException ignored) {}
         }
-        return produtos;
-    }
-
-    private String[] obterDadosProdutoCsv(String linha) {
-        String[] p = linha.split(",");
-        for (int i = 0; i < p.length; i++) p[i] = p[i].trim();
-        return p;
+        return lista;
     }
 
     private void salvarProdutos() {
