@@ -27,6 +27,7 @@ public class PessoasArray {
                 encontrado = true;
             }
         }
+        
         if (!encontrado) {
             throw new IllegalArgumentException(
                 String.format("O nome %s não se encontra no array de nomes", nome)
