@@ -26,12 +26,12 @@ public class Blog {
     }
 
     public Map<Categorias, Integer> obterContagemPorCategoria() {
-        Map<Categorias, Integer> mapa = new HashMap<>();
+        Map<Categorias, Integer> mapa = new EnumMap<>(Categorias.class);
         for (Post p : postagens) {
             mapa.merge(p.getCategoria(), 1, Integer::sum);
         }
         return mapa;
-    }
+    }    
 
     public Set<Post> obterPostsPorAutor(Autor autor) {
         Set<Post> res = new TreeSet<>();
@@ -54,18 +54,20 @@ public class Blog {
     }
 
     public Map<Categorias, Set<Post>> obterTodosPostsPorCategorias() {
-        Map<Categorias, Set<Post>> res = new HashMap<>();
+        Map<Categorias, Set<Post>> res = new EnumMap<>(Categorias.class);
         for (Post p : postagens) {
             res.computeIfAbsent(p.getCategoria(), k -> new TreeSet<>()).add(p);
         }
         return res;
     }
+    
 
     public Map<Autor, Set<Post>> obterTodosPostsPorAutor() {
-        Map<Autor, Set<Post>> res = new HashMap<>();
+        Map<Autor, Set<Post>> res = new TreeMap<>();
         for (Post p : postagens) {
             res.computeIfAbsent(p.getAutor(), k -> new TreeSet<>()).add(p);
         }
         return res;
     }
+    
 }
