@@ -17,10 +17,11 @@ public class Autor implements Comparable<Autor> {
 
     @Override
     public int compareTo(Autor o) {
-        int c = this.sobrenome.compareToIgnoreCase(o.sobrenome);
+        int c = this.getNome().compareToIgnoreCase(o.getNome());
         if (c != 0) return c;
-        return this.nome.compareToIgnoreCase(o.nome);
+        return this.getSobrenome().compareToIgnoreCase(o.getSobrenome());
     }
+
 
     @Override
     public boolean equals(Object obj) {
