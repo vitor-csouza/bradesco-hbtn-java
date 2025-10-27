@@ -13,7 +13,5 @@ public class ProdutorConsumidor {
         // (opcional mas recomendado) Aguardar ambas terminarem
         produtor.join();
         consumidor.join();
-
-        System.out.println("Processo finalizado.");
     }
 }
